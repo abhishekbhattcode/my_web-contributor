@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Html Forms</title>
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e0e0e0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #121212;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px #5bc1d655;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #00ffff;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ffff88;
+        }
+
+        label {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="password"],
+        input[type="date"] {
+            background-color: #222;
+            border: 1px solid #00ffff55;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px #00ffff55;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 15px #00ffffaa;
+        }
+
+        .gender-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gender-options label {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .gender-options input[type="radio"] {
+            accent-color: #00ffff;
+            margin-right: 5px;
+            transform: scale(1.2);
+        }
+
+        input[type="submit"] {
+            background-color: #00ffff;
+            color: #000;
+            padding: 12px 30px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 20px #00ffff88;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #00cccc;
+            transform: scale(1.03);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #00ffff33;
+            margin: 25px 0;
+        }
+
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            input[type="submit"] {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+
+        #DOB {
+            background-color: #1a1a1a;
+            color: #00ffff;
+            border: 1px solid #00ffff55;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: 0 0 10px #00ffff33;
+        }
+
+        /* Custom calendar styles */
+        .flatpickr-calendar {
+            box-shadow: 0 0 15px #00ffff88;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .flatpickr-months,
+        .flatpickr-weekdays,
+        .flatpickr-days {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .flatpickr-day:hover,
+        .flatpickr-day.today {
+            background: #00ffff33;
+            border-color: #00ffff88;
+        }
+
+        .flatpickr-day.selected {
+            background: #00ffff !important;
+            color: #000 !important;
+        }
+
+        /* loading animationns  */
+        #loading-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loading-gate.hidden {
+            display: none;
+        }
+
+        .gate {
+            position: relative;
+            width: 80%;
+            height: 300px;
+            background: #111;
+            border: 2px solid #0ff;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .left-door,
+        .right-door {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #0ff;
+            animation: slide-open 2s forwards;
+        }
+
+        .left-door {
+            left: 0;
+        }
+
+        .right-door {
+            right: 0;
+        }
+
+        .gate-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: white;
+        }
+
+        @keyframes slide-open {
+            to {
+                width: 0;
+            }
+        }
+
+        /* === DARK THEME WALLPAPER BACKGROUND === */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('/f.jpg') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.2;
+            /* Adjust darkness */
+            z-index: -100;
+            /* Push far behind everything */
+            filter: brightness(0.8) blur(1.5px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container" style="display: flex; justify-content: center; align-items: center; gap: 2rem;">
+
+        <form class="form-container" id="myForm" action="https://formsubmit.co/abhishekbhatt7721@gmail.com"
+            method="POST" autocomplete="off">
+            <!-- Hidden Inputs to Prevent Spam -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="box">
+            <input type="hidden" name="_autoresponse"
+                value="Thank you for submitting the form! We will contact you soon.">
+
+            <h1>Login or signup</h1>
+
+            <label for="name">Name:</label>
+            <input id="name" type="text" placeholder="Enter your name" required />
+            <!-- MOBILE NUMBER -->
+            <label for="number">Mobile Number:</label>
+            <input id="number" type="tel" name="mobile" pattern="[0-9]{10}" maxlength="10"
+                placeholder="Enter 10-digit mobile number" required autocomplete="off" />
+
+            <!-- PASSWORD -->
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="new-password" placeholder="Enter password" required
+                autocomplete="new-password" onmouseenter="showPasswordOnce(this)" onmouseleave="resetRevealFlag()" />
+
+            <label for="DOB">Date of Birth:</label>
+            <input id="DOB" type="text" placeholder="Select your DOB" required="true" />
+
+            <label>Gender:</label>
+            <div class="gender-options">
+                <label for="male"><input id="male" type="radio" name="gender" value="male" required /> Male</label>
+                <label for="female"><input id="female" type="radio" name="gender" value="female" /> Female</label>
+                <label for="other"><input id="other" type="radio" name="gender" value="other" /> Other</label>
+            </div>
+
+            <input type="submit" value="Submit" />
+
+        </form>
+    </div>
+    <!-- animation -->
+    <!-- Outside the form -->
+    <div id="loading-gate" class="hidden">
+        <div class="gate">
+            <div class="left-door"></div>
+            <div class="right-door"></div>
+            <div class="gate-text">Processing...</div>
+        </div>
+    </div>
+
+
+    <script>
+        // Password reveal for 1 second on hover
+        let passwordTimer;
+        let alreadyRevealed = false;
+
+        function showPasswordOnce(input) {
+            if (alreadyRevealed) return;
+            input.type = "text";
+            alreadyRevealed = true;
+            passwordTimer = setTimeout(() => {
+                input.type = "password";
+            }, 1000);
+        }
+
+        function resetRevealFlag() {
+            clearTimeout(passwordTimer);
+            alreadyRevealed = false;
+        }
+
+        // Flatpickr initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            flatpickr("#DOB", {
+                maxDate: "today",
+                dateFormat: "Y-m-d"
+            });
+        });
+
+        // Gate loading animation then submit
+        const form = document.getElementById("myForm");
+        const loadingGate = document.getElementById("loading-gate");
+        const gate = document.querySelector(".gate");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // temporarily stop native submission
+
+            // Hide form and show gate
+            form.style.display = "none";
+            loadingGate.classList.remove("hidden");
+
+            // Trigger gate animation + play landing sound
+            setTimeout(() => {
+                gate.classList.add("open");
+                document.getElementById("landingSound").play(); // <<-- play sound here
+            }, 100);
+
+
+            // After animation, allow form submission
+            setTimeout(() => {
+                form.submit(); // <== This sends the data to FormSubmit
+            }, 2500); // adjust to match animation duration
+        });
+    </script>
+    <!-- voice -->
+    <audio id="landingSound" src="/hello-46355.mp3" preload="auto"></audio>
+
+</body>
+
+</html>
