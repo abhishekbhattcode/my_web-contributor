@@ -277,7 +277,7 @@ ul li a span {
 
 .floating-card {
     position: absolute;
-    background: linear-gradient(135deg, var(--card-bg), rgba(157, 78, 221, 0.1));
+    background: linear-gradient(135deg, var(--card-bg), rgba(90, 42, 129, 0.479));
     border: 1px solid rgba(0, 212, 255, 0.3);
     border-radius: 20px;
     backdrop-filter: blur(10px);
