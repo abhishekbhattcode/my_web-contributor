@@ -286,7 +286,7 @@ ul li a span {
 
 .card-1 {
     width: 180px;
-    height: 230px;
+    height: 231px;
     top: 0;
     left: 0;
     animation: float 6s ease-in-out infinite;
@@ -308,7 +308,7 @@ ul li a span {
     animation: float 7s ease-in-out infinite;
 }
 
-/* ========== VALUES SECTION ========== */
+
 .values-section {
     padding: 100px 50px;
     background: var(--dark-bg);
@@ -343,7 +343,7 @@ ul li a span {
 .value-card::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 2;
     left: 0;
     width: 100%;
     height: 100%;
